@@ -26,7 +26,7 @@ func init() {
 func main() {
 	app := splat.New(signingSecret)
 
-	app.RegisterCommand("/test", func(p *splat.Payload) *splat.Response {
+	app.RegisterCommand("/first", func(p *splat.Payload) *splat.Response {
 
 		response := new(splat.Response)
 
@@ -48,7 +48,7 @@ func main() {
 		return nil
 	})
 
-	log.Fatal(app.Open(":3000", "/slackcommands"))
+	log.Fatal(app.Open(":3000", "/slack-first"))
 }
 
 func teamCommand(args []string, r *splat.Response) {
