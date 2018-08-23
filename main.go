@@ -26,26 +26,22 @@ func init() {
 func main() {
 	app := splat.New(signingSecret)
 
-	app.RegisterCommand("first", func(p *splat.Payload) *splat.Response {
+	app.RegisterCommand("first", func(p *splat.SlashRequest) {
 
 		response := new(splat.Response)
 
-		if p.Text != "" {
-			args := strings.Split(p.Text, " ")
+		args := strings.Split(p.Text, " ")
 
-			switch args[0] {
-			case "team":
-				teamCommand(args[1:], response)
-			case "help":
-				helpCommand(response)
-			default:
-				unknownCommand(response)
-			}
-
-			return response
+		switch args[0] {
+		case "team":
+			teamCommand(args[1:], response)
+		case "help":
+			helpCommand(response)
+		default:
+			unknownCommand(response)
 		}
 
-		return nil
+		p.Write(response)
 	})
 
 	app.RegisterAction("test_action", "test", func(p *splat.ActionPayload) {
